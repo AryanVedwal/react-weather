@@ -52,6 +52,7 @@ const Temp = () => {
             className="searchTerm"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
+            autoComplete="off"
           />
 
           <button
