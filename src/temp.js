@@ -8,7 +8,9 @@ const Temp = () => {
   const [unit, setUnit] = useState("metric"); // Default to Celsius
 
   const toggleUnit = () => {
-    setUnit(unit === "metric" ? "imperial" : "metric");
+    setUnit((prevUnit) => (prevUnit === "metric" ? "imperial" : "metric"));
+    // Update unit state before calling getWeatherInfo
+    handleSearch();
   };
 
   const getWeatherInfo = async (city) => {
@@ -43,9 +45,9 @@ const Temp = () => {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (searchValue.trim() !== "") {
-      getWeatherInfo(searchValue);
+      await getWeatherInfo(searchValue);
     }
   };
 
@@ -65,7 +67,7 @@ const Temp = () => {
         <div className="search">
           <input
             type="search"
-            placeholder="asdjb"
+            placeholder="Enter city name"
             autoFocus
             id="search"
             className="searchTerm"

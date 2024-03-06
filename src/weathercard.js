@@ -9,8 +9,13 @@
 //   speed,
 //   country,
 //   sunset,
+//   unit,
+//   toggleUnit,
 // }) => {
 //   const [weatherState, setWeatherState] = React.useState("");
+
+//   const displayTemp =
+//     unit === "metric" ? temp.toFixed(2) : ((temp * 9) / 5 + 32).toFixed(2);
 
 //   useEffect(() => {
 //     if (weathermood) {
@@ -34,10 +39,10 @@
 //     }
 //   }, [weathermood]);
 
-//   // converting the seconds into time
 //   let sec = sunset;
 //   let date = new Date(sec * 1000);
 //   let timeStr = `${date.getHours()}:${date.getMinutes()}`;
+
 //   return (
 //     <>
 //       <article className="widget">
@@ -47,7 +52,12 @@
 
 //         <div className="weatherInfo">
 //           <div className="temperature">
-//             <span>{temp}&deg;</span>
+//             <span>
+//               {displayTemp}&deg;{unit === "metric" ? "C" : "F"}
+//             </span>
+//             <button className="temp-unit" onClick={toggleUnit}>
+//               <span class="material-symbols-outlined">autorenew</span>
+//             </button>
 //           </div>
 
 //           <div className="description">
@@ -60,7 +70,6 @@
 
 //         <div className="date"> {new Date().toLocaleString()} </div>
 
-//         {/* our 4column section  */}
 //         <div className="extra-temp">
 //           <div className="temp-info-minmax">
 //             <div className="two-sided-section">
@@ -113,10 +122,11 @@
 
 // export default Weathercard;
 
+
 import React, { useEffect } from "react";
 
 const Weathercard = ({
-  temp,
+  temp = 0,
   humidity,
   pressure,
   weathermood,
