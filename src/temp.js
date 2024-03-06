@@ -5,10 +5,17 @@ import "./style.css";
 const Temp = () => {
   const [searchValue, setSearchValue] = useState("");
   const [tempInfo, setTempInfo] = useState({});
+  const [unit, setUnit] = useState("metric"); // Default to Celsius
 
-  const getWeatherInfo = async () => {
+  const toggleUnit = () => {
+    setUnit(unit === "metric" ? "imperial" : "metric");
+  };
+
+  const getWeatherInfo = async (city) => {
     try {
-      let url = `https://api.openweathermap.org/data/2.5/weather?q=${searchValue}&units=metric&appid={}`;
+      const apiKey = process.env.REACT_APP_API_KEY;
+
+      let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${unit}&appid=${apiKey}`;
 
       let res = await fetch(url);
       let data = await res.json();
@@ -36,9 +43,21 @@ const Temp = () => {
     }
   };
 
+  const handleSearch = () => {
+    if (searchValue.trim() !== "") {
+      getWeatherInfo(searchValue);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   useEffect(() => {
-    getWeatherInfo();
-  }, []);
+    handleSearch();
+  }, [unit]); // Fetch weather data when unit changes
 
   return (
     <>
@@ -46,30 +65,28 @@ const Temp = () => {
         <div className="search">
           <input
             type="search"
-            placeholder="search..."
+            placeholder="asdjb"
             autoFocus
             id="search"
             className="searchTerm"
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
+            onKeyPress={handleKeyPress}
             autoComplete="off"
           />
 
-          <button
-            className="searchButton"
-            type="button"
-            onClick={getWeatherInfo}>
+          <button className="searchButton" type="button" onClick={handleSearch}>
             Search
           </button>
         </div>
       </div>
-
-      {/* our temp card  */}
-      <Weathercard {...tempInfo} />
+      {Object.keys(tempInfo).length !== 0 ? (
+        <Weathercard {...tempInfo} unit={unit} toggleUnit={toggleUnit} />
+      ) : (
+        <div className="no-result">No results found</div>
+      )}
     </>
   );
 };
 
 export default Temp;
-
-
