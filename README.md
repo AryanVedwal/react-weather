@@ -1,5 +1,9 @@
 ![Weather App](./Screenshots/SS1.png)
 
+# Change Api Key
+
+ const apiKey = 'Here add Your Api Key';
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
