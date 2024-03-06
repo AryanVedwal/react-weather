@@ -1,4 +1,4 @@
-![Weather App](https://github.com/AryanVedwal/react-weather/blob/master/Screenshots/SS1.png)
+![Weather App](./Screenshots/SS1.png)
 
 # Getting Started with Create React App
 
